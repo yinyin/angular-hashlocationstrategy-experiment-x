@@ -23,7 +23,7 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
       this.basePathName = _baseHref;
     } else {
       const currentPathName = _platformLocation.pathname;
-      this.basePathName = (currentPathName ? currentPathName : '/');
+      this.basePathName = currentPathName || '/';
     }
   }
 
