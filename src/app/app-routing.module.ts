@@ -13,7 +13,7 @@ const routes: Routes = [
 
 @Injectable()
 export class ProposeHashLocationStrategy extends HashLocationStrategy {
-  private basePathName = '/';
+  private basePathName: string;
 
   constructor(
       _platformLocation: PlatformLocation,
