@@ -71,8 +71,10 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
 @NgModule({
   imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule],
-  providers:
-      [{provide: LocationStrategy, useClass: ProposeHashLocationStrategy}]
+  providers: [
+    {provide: LocationStrategy, useClass: ProposeHashLocationStrategy},
+    {provide: APP_BASE_HREF, useValue: '/my/app'}
+  ]
 })
 export class AppRoutingModule {
 }
