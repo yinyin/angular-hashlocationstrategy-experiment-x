@@ -19,27 +19,32 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
       _platformLocation: PlatformLocation,
       @Optional() @Inject(APP_BASE_HREF) _baseHref?: string) {
     super(_platformLocation, _baseHref);
-    if (_baseHref != null) {
-      this.basePathName = _baseHref;
-    } else {
-      const currentPathName = _platformLocation.pathname;
-      this.basePathName = currentPathName || '/';
+    if (_baseHref == null) {
+      _baseHref = _platformLocation.getBaseHrefFromDOM();
     }
+    if (_baseHref == null) {
+      _baseHref = _platformLocation.pathname;
+    }
+    _baseHref = _baseHref || '/';
+    this.basePathName = _stripOnlyIndexHtml(_baseHref);
   }
 
   getBaseHref(): string {
-    return this.basePathName;
+    return this.basePathName + '#';
   }
 
   prepareExternalUrl(internal: string): string {
     if (internal.length === 0) {
-      return this.basePathName;
+      return this.basePathName + '#/';
     }
-    const url = this.basePathName + '#' + internal;
-    return url;
+    const mark = internal.startsWith('/') ? '#' : '#/';
+    return this.basePathName + mark + internal;
   }
 }
 
+function _stripOnlyIndexHtml(url: string): string {
+  return url.replace(/\/index.html$/, '/');
+}
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {useHash: true})],
