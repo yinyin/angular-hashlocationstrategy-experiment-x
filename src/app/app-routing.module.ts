@@ -13,37 +13,32 @@ const routes: Routes = [
 
 @Injectable()
 export class ProposeHashLocationStrategy extends HashLocationStrategy {
-  private basePathName: string;
+  private urlBaseHref: string;
 
   constructor(
       _platformLocation: PlatformLocation,
       @Optional() @Inject(APP_BASE_HREF) _baseHref?: string) {
     super(_platformLocation, _baseHref);
-    if (_baseHref == null) {
-      _baseHref = _platformLocation.getBaseHrefFromDOM();
+    try {
+      _baseHref = _baseHref || _platformLocation.getBaseHrefFromDOM();
+    } catch (e) {
+      _baseHref = undefined;
     }
-    if (_baseHref == null) {
-      _baseHref = _platformLocation.pathname;
-    }
-    _baseHref = _baseHref || '/';
-    this.basePathName = _stripOnlyIndexHtml(_baseHref);
+    _baseHref = _baseHref || _platformLocation.pathname;
+    this.urlBaseHref = _baseHref;
   }
 
   getBaseHref(): string {
-    return this.basePathName + '#';
+    return this.urlBaseHref + '#';
   }
 
   prepareExternalUrl(internal: string): string {
     if (internal.length === 0) {
-      return this.basePathName + '#/';
+      return this.urlBaseHref + '#/';
     }
     const mark = internal.startsWith('/') ? '#' : '#/';
-    return this.basePathName + mark + internal;
+    return this.urlBaseHref + mark + internal;
   }
-}
-
-function _stripOnlyIndexHtml(url: string): string {
-  return url.replace(/\/index.html$/, '/');
 }
 
 @NgModule({
