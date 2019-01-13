@@ -15,11 +15,11 @@ fi
 do_rebase() {
 	REBASE_BRANCH=$1
 	REBASE_BASE=$2
-	echo "rebasing ${REBASE_BRANCH} to ${REBASE_BASE}."
+	echo "rebasing ${REBASE_BRANCH} to ${REBASE_BASE}..."
+	sleep 3
 	git checkout "${REBASE_BRANCH}"
 	git rebase "${REBASE_BASE}" -i
 	echo "rebase complete."
-	sleep 2
 }
 
 BASEBRANCH="master"
@@ -33,3 +33,5 @@ for NEXTBRANCH in "hash-wo-app-base-href" "proposehash-wo-app-base-href" "propos
 	do_rebase "${NEXTBRANCH}" "${BASEBRANCH}"
 	BASEBRANCH=$NEXTBRANCH
 done
+
+git checkout master
