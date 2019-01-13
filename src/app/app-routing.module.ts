@@ -64,7 +64,7 @@ export class ProposeNoBreakingHashLocationStrategy extends
       provide: LocationStrategy,
       useClass: ProposeNoBreakingHashLocationStrategy
     },
-    {provide: APP_BASE_HREF, useValue: '/my/app'}
+    {provide: APP_BASE_HREF, useValue: ''}
   ]
 })
 export class AppRoutingModule {
