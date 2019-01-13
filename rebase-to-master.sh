@@ -34,4 +34,10 @@ for NEXTBRANCH in "hash-wo-app-base-href" "proposehash-wo-app-base-href" "propos
 	BASEBRANCH=$NEXTBRANCH
 done
 
+BASEBRANCH="hash-wo-app-base-href"
+for NEXTBRANCH in "proposehash2-wo-app-base-href" "proposehash2-w-app-base-href" "proposehash2-w-empty-app-base-href"; do
+	do_rebase "${NEXTBRANCH}" "${BASEBRANCH}"
+	BASEBRANCH=$NEXTBRANCH
+done
+
 git checkout master
