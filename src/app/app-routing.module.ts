@@ -14,7 +14,6 @@ const routes: Routes = [
 @Injectable()
 export class ProposeHashLocationStrategy extends HashLocationStrategy {
   private urlBaseHref: string;
-  private urlFragmentPrefix: string;
   private urlHashFragmentPrefix: string;
 
   private sysPlatformLocation: PlatformLocation;
@@ -32,12 +31,11 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
     const hashSignAt = _baseHref.indexOf('#');
     if (hashSignAt >= 0) {
       this.urlBaseHref = _baseHref.substring(0, hashSignAt);
-      this.urlFragmentPrefix = _baseHref.substring(hashSignAt + 1);
+      this.urlHashFragmentPrefix = '#' + _baseHref.substring(hashSignAt + 1);
     } else {
       this.urlBaseHref = _baseHref;
-      this.urlFragmentPrefix = '';
+      this.urlHashFragmentPrefix = '#';
     }
-    this.urlHashFragmentPrefix = '#' + this.urlFragmentPrefix;
     this.sysPlatformLocation = _platformLocation;
   }
 
