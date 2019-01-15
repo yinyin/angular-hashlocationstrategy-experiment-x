@@ -1,4 +1,4 @@
-import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy, PlatformLocation} from '@angular/common';
+import {APP_BASE_HREF, HashLocationStrategy, Location, LocationStrategy, PlatformLocation} from '@angular/common';
 import {Inject, Injectable, NgModule, Optional} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
@@ -22,16 +22,15 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
       _platformLocation: PlatformLocation,
       @Optional() @Inject(APP_BASE_HREF) _baseHref?: string) {
     super(_platformLocation, _baseHref);
-    try {
-      _baseHref = _baseHref || _platformLocation.getBaseHrefFromDOM();
-    } catch (e) {
-      _baseHref = undefined;
+    _baseHref = _baseHref || '';
+    if (!_baseHref.startsWith('/')) {
+      _baseHref = ('' === _baseHref) ? _baseHref : ('#' + _baseHref);
     }
-    _baseHref = _baseHref || _platformLocation.pathname;
     const hashSignAt = _baseHref.indexOf('#');
     if (hashSignAt >= 0) {
       this.urlBaseHref = _baseHref.substring(0, hashSignAt);
-      this.urlHashFragmentPrefix = '#' + _baseHref.substring(hashSignAt + 1);
+      this.urlHashFragmentPrefix = '#' +
+          Location.stripTrailingSlash(_baseHref.substring(hashSignAt + 1));
     } else {
       this.urlBaseHref = _baseHref;
       this.urlHashFragmentPrefix = '#';
