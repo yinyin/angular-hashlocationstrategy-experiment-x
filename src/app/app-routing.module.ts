@@ -24,6 +24,9 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
     super(_platformLocation, _baseHref);
     _baseHref = _baseHref || '';
     if (!_baseHref.startsWith('/')) {
+      if (_baseHref.startsWith('#')) {
+        _baseHref = _baseHref.substring(1);
+      }
       _baseHref = ('' === _baseHref) ? _baseHref : ('#' + _baseHref);
     }
     const hashSignAt = _baseHref.indexOf('#');
