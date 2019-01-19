@@ -29,20 +29,20 @@ for NEXTBRANCH in "path-w-app-base-href" "hash-w-app-base-href" "hash-w-empty-ap
 done
 
 BASEBRANCH="master"
-for NEXTBRANCH in "hash-wo-app-base-href" "proposehash-wo-app-base-href" "proposehash-w-app-base-href" "proposehash-w-empty-app-base-href"; do
+for NEXTBRANCH in "hash-wo-app-base-href" "proposehash-wo-app-base-href" "proposehash-w-app-base-href"; do
 	do_rebase "${NEXTBRANCH}" "${BASEBRANCH}"
 	BASEBRANCH=$NEXTBRANCH
+done
+
+BASEBRANCH="proposehash-w-app-base-href"
+for COMPATBRANCH in "proposehash-w-empty-app-base-href" "proposehash-w-app-base-href-ngjs-compat" "proposehash-w-app-base-href-fragprefix"; do
+	do_rebase "${COMPATBRANCH}" "${BASEBRANCH}"
 done
 
 BASEBRANCH="hash-wo-app-base-href"
 for NEXTBRANCH in "proposehash2-wo-app-base-href" "proposehash2-w-app-base-href" "proposehash2-w-empty-app-base-href"; do
 	do_rebase "${NEXTBRANCH}" "${BASEBRANCH}"
 	BASEBRANCH=$NEXTBRANCH
-done
-
-BASEBRANCH="proposehash2-w-app-base-href"
-for COMPATBRANCH in "proposehash2-w-empty-app-base-href" "proposehash-w-app-base-href-ngjs-compat" "proposehash-w-app-base-href-fragprefix"; do
-	do_rebase "${COMPATBRANCH}" "${BASEBRANCH}"
 done
 
 git checkout master
