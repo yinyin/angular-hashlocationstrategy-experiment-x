@@ -73,7 +73,7 @@ export class ProposeHashLocationStrategy extends HashLocationStrategy {
   exports: [RouterModule],
   providers: [
     {provide: LocationStrategy, useClass: ProposeHashLocationStrategy},
-    {provide: APP_BASE_HREF, useValue: '/my/app'}
+    {provide: APP_BASE_HREF, useValue: '#/prefix/with!/'}
   ]
 })
 export class AppRoutingModule {
