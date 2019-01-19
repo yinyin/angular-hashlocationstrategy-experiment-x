@@ -40,4 +40,9 @@ for NEXTBRANCH in "proposehash2-wo-app-base-href" "proposehash2-w-app-base-href"
 	BASEBRANCH=$NEXTBRANCH
 done
 
+BASEBRANCH="proposehash2-w-app-base-href"
+for COMPATBRANCH in "proposehash2-w-empty-app-base-href" "proposehash-w-app-base-href-ngjs-compat" "proposehash-w-app-base-href-fragprefix"; do
+	do_rebase "${COMPATBRANCH}" "${BASEBRANCH}"
+done
+
 git checkout master
